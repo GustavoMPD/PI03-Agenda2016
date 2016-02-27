@@ -9,5 +9,5 @@
  * @author mauricio.gosilva1
  */
 public class Agenda {
-    
+    public static void mail (string[] args){}
 }
