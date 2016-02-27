@@ -7,8 +7,12 @@ package br.senac.tads.pi3.agenda.agenda;
 
 /**
  *
- * @author mauricio.gosilva1
+ * @author Mauricio Gustavo
+ * @author Leandro Rodrigues
  */
 public class Agenda {
-    
+    public static void main (String[] args){
+        
+        
+    }
 }
