@@ -12,7 +12,6 @@ package br.senac.tads.pi3.agenda.agenda;
  */
 public class Agenda {
     public static void main (String[] args){
-        
-        
+        System.out.println("teste");
     }
 }
