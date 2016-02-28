@@ -28,12 +28,15 @@ public class Agenda {
                     break;
                 case 1:
                     //CHAMAR METODO INSERIR, DESENVOLVER ABAIXO
+                    System.out.println("Incerir novo contato");
                     break;
                 case 2:
                     //CHAMAR METODO REMOVER, DESENVOLVER ABAIXO
+                    System.out.println("Remover contato");
                     break;
                 case 3:
                     //CHAMAR METODO ATUALIZAR, DESENVOLVER ABAIXO
+                    System.out.println("Atualizar contato");
                     break;
                 case 4:
                     crud.listarPessoas();
