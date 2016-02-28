@@ -5,6 +5,7 @@
  */
 package br.senac.tads.pi3.agenda.agenda;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -16,7 +17,8 @@ public class Agenda {
     public static Scanner ler = new Scanner(System.in);
     public static int menu;
     
-    public static void main (String[] args){
+    public static void main (String[] args) throws ClassNotFoundException, SQLException{
+        Crud crud = new Crud();
         do{
             menu = opcao();
             switch (menu){
@@ -34,7 +36,7 @@ public class Agenda {
                     //CHAMAR METODO ATUALIZAR, DESENVOLVER ABAIXO
                     break;
                 case 4:
-                    //CHAMAR METODO LISTAR, DESENVOLVER ABAIXO
+                    crud.listarPessoas();
                     break;
                 default:
                     System.out.println("Opção inválida!");
