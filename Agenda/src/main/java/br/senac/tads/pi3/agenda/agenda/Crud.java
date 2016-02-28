@@ -7,7 +7,6 @@ package br.senac.tads.pi3.agenda.agenda;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,7 +22,7 @@ import java.util.logging.Logger;
 public class Crud {
 
     //Metodo listar
-    public void listarPessoas() throws ClassNotFoundException {
+    public void listarPessoas() throws ClassNotFoundException, SQLException {
         Conexao conexao = new Conexao();
         Statement stmt = null;
         Connection conn = null;
@@ -62,6 +61,7 @@ public class Crud {
                     Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            conexao.fechaConexoes();
         }
     }
 }
