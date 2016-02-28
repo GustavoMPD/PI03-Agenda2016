@@ -6,62 +6,44 @@
 package br.senac.tads.pi3.agenda.agenda;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Mauricio Gustavo
  * @author Leandro Rodrigues
  */
 public class Crud {
-
+    Connection c;
+    String sql;
+    PreparedStatement prepareStmt;
+    ResultSet resSelect;
+    
     //Metodo listar
-    public void listarPessoas() throws ClassNotFoundException, SQLException {
-        Conexao conexao = new Conexao();
-        Statement stmt = null;
-        Connection conn = null;
-
-        String sql = "SELECT ID_PESSOA, NM_PESSOA, DT_NASCIMENTO, VL_TELEFONE, VL_EMAIL FROM TB_PESSOA";
+    public void listarPessoas() throws SQLException, ClassNotFoundException {
         try {
-            conn = conexao.obterConexao();
-            stmt = conn.createStatement();
-            ResultSet resultados = stmt.executeQuery(sql);
+            c = Conexao.obterConexao();
+            sql = "SELECT * FROM TB_CONTATO";
+            prepareStmt = c.prepareStatement(sql);
+            resSelect = prepareStmt.executeQuery();
 
-            DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
-
-            while (resultados.next()) {
-                Long id = resultados.getLong("ID_PESSOA");
-                String nome = resultados.getString("NM_PESSOA");
-                Date dataNasc = resultados.getDate("DT_NASCIMENTO");
-                String email = resultados.getString("VL_EMAIL");
-                String telefone = resultados.getString("VL_TELEFONE");
-                System.out.println(String.valueOf(id) + ", " + nome + ", " + formatadorData.format(dataNasc) + ", " + email + ", " + telefone);
+            while (resSelect.next()) {
+                System.out.println("\nID_CONTATO: " + resSelect.getLong(1)
+                        + " NM_CONTATO: " + resSelect.getString(2)
+                        + " DT_NASCIMENTO: " + resSelect.getDate(3)
+                        + " VL_TELEFONE: " + resSelect.getString(4)
+                        + " VL_EMAIL: " + resSelect.getString(5)
+                        + " DT_CADASTRO: " + resSelect.getTimestamp(6));
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            conexao.fechaConexoes();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("\nErro: " + e);
+        }
+        finally{
+            resSelect.close();
+            prepareStmt.close();
+            c.commit();
+            c.close();
         }
     }
 }
