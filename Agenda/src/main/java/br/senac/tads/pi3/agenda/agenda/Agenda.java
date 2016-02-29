@@ -26,7 +26,7 @@ public class Agenda {
                     //SAIR DO APP
                     System.out.println("\nObrigado por usar o App Agenda!!");
                     System.out.println("teste"
-                            + "");
+                            + "texto 20:33");
                     break;
                 case 1:
                     //CHAMAR METODO INSERIR, DESENVOLVER ABAIXO
