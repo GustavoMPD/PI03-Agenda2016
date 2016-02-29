@@ -6,9 +6,14 @@
 package br.senac.tads.pi3.agenda.agenda;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Scanner;
 
 /**
  * @author Mauricio Gustavo
@@ -19,6 +24,8 @@ public class Crud {
     String sql;
     PreparedStatement prepareStmt;
     ResultSet resSelect;
+    Statement state;
+    Scanner ler = new Scanner(System.in);
     
     //Metodo listar
     public void listarPessoas() throws SQLException, ClassNotFoundException {
@@ -42,6 +49,41 @@ public class Crud {
         finally{
             resSelect.close();
             prepareStmt.close();
+            c.commit();
+            c.close();
+        }
+    }
+    
+    //metodo Atualizar
+    public void atualizar() throws ParseException, SQLException{
+        DateFormat dt = DateFormat.getInstance();
+        String nome, telefone, email;
+        Date date;
+        
+        System.out.println("\nDigite o nome que deseja atualizar: ");
+        nome = ler.next();
+        System.out.println("\nDigite o telefone: ");
+        telefone = ler.next();
+        System.out.println("\nDigite o email: ");
+        email = ler.next();
+        System.out.println("\nDigite a data de nascimento no formato dd/mm/yyyy: ");
+        date = (Date) dt.parse(ler.next());
+                
+        try{
+            c = Conexao.obterConexao();
+            sql = "UPDATE TB_CONTATO "
+                    + "SET NM_CONTATO = " + nome
+                    + "DT_NASCIMENTO = " + date
+                    + "VL+TELEFONE = " + telefone
+                    + "VL_EMAIL = " + email;
+            state = c.createStatement();
+            state.execute(sql);
+            state.close();
+        }
+        catch(SQLException | ClassNotFoundException e){
+            System.out.println("\nErro: " + e);
+        }
+        finally{
             c.commit();
             c.close();
         }
