@@ -25,7 +25,7 @@ public class Agenda {
                 case 0:
                     //SAIR DO APP
                     System.out.println("\nObrigado por usar o App Agenda!!");
-                    System.out.println("teste"
+                    System.out.println("teste LEANDRO"
                             + "texto 20:33");
                     break;
                 case 1:
