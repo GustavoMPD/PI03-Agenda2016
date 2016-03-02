@@ -6,6 +6,7 @@
 package br.senac.tads.pi3.agenda.agenda;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 /**
@@ -17,7 +18,7 @@ public class Agenda {
     public static Scanner ler = new Scanner(System.in);
     public static int menu;
     
-    public static void main (String[] args) throws ClassNotFoundException, SQLException{
+    public static void main (String[] args) throws ClassNotFoundException, SQLException, ParseException{
         Crud crud = new Crud();
         do{
             menu = opcao();
@@ -25,8 +26,6 @@ public class Agenda {
                 case 0:
                     //SAIR DO APP
                     System.out.println("\nObrigado por usar o App Agenda!!");
-                    System.out.println("teste LEANDRO"
-                            + "texto 20:33");
                     break;
                 case 1:
                     //CHAMAR METODO INSERIR, DESENVOLVER ABAIXO
@@ -39,6 +38,7 @@ public class Agenda {
                 case 3:
                     //CHAMAR METODO ATUALIZAR, DESENVOLVER ABAIXO
                     System.out.println("Atualizar contato");
+                    crud.atualizar();
                     break;
                 case 4:
                     crud.listarPessoas();

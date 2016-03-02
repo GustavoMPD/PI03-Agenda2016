@@ -74,8 +74,9 @@ public class Crud {
             sql = "UPDATE TB_CONTATO "
                     + "SET NM_CONTATO = " + nome
                     + "DT_NASCIMENTO = " + date
-                    + "VL+TELEFONE = " + telefone
-                    + "VL_EMAIL = " + email;
+                    + "VL_TELEFONE = " + telefone
+                    + "VL_EMAIL = " + email
+                    + "WHERE TB_CONTATO.NM_CONTATO = " + nome;
             state = c.createStatement();
             state.execute(sql);
             state.close();
