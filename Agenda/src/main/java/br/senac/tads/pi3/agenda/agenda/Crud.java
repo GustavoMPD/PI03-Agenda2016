@@ -20,14 +20,19 @@ import java.util.Scanner;
  * @author Leandro Rodrigues
  */
 public class Crud {
+
     Connection c;
     String sql;
     PreparedStatement prepareStmt;
     ResultSet resSelect;
     Statement state;
     Scanner ler = new Scanner(System.in);
-    
-    //Metodo listar
+
+    /**
+     * 
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void listarPessoas() throws SQLException, ClassNotFoundException {
         try {
             c = Conexao.obterConexao();
@@ -45,21 +50,24 @@ public class Crud {
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("\nErro: " + e);
-        }
-        finally{
+        } finally {
             resSelect.close();
             prepareStmt.close();
             c.commit();
             c.close();
         }
     }
-    
-    //metodo Atualizar
-    public void atualizar() throws ParseException, SQLException{
+
+    /**
+     * 
+     * @throws ParseException
+     * @throws SQLException 
+     */
+    public void atualizar() throws ParseException, SQLException {
         DateFormat dt = DateFormat.getInstance();
         String nome, telefone, email;
         Date date;
-        
+
         System.out.println("\nDigite o nome que deseja atualizar: ");
         nome = ler.next();
         System.out.println("\nDigite o telefone: ");
@@ -68,25 +76,100 @@ public class Crud {
         email = ler.next();
         System.out.println("\nDigite a data de nascimento no formato dd/mm/yyyy: ");
         date = (Date) dt.parse(ler.next());
-                
-        try{
+
+        try {
             c = Conexao.obterConexao();
             sql = "UPDATE TB_CONTATO "
                     + "SET NM_CONTATO = " + nome
                     + "DT_NASCIMENTO = " + date
-                    + "VL_TELEFONE = " + telefone
+                    + "VL+TELEFONE = " + telefone
                     + "VL_EMAIL = " + email
-                    + "WHERE TB_CONTATO.NM_CONTATO = " + nome;
+                    + "WHERENM_CONTATO = "+nome;
             state = c.createStatement();
             state.execute(sql);
             state.close();
-        }
-        catch(SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("\nErro: " + e);
-        }
-        finally{
+        } finally {
             c.commit();
             c.close();
         }
     }
+    
+    /**
+     * 
+     * @param nome
+     * @param telefone
+     * @param email
+     * @param date
+     * @throws SQLException
+     * @throws ParseException 
+     */
+    public void cadastrarContato(String nome, String telefone, String email,
+            Date date) throws SQLException, ParseException {
+        
+        try {
+            c = Conexao.obterConexao();
+            sql = "INSERT INTO TB_CONTATO "
+                    + "SET NM_CONTATO = " + nome
+                    + "DT_NASCIMENTO = " + date
+                    + "VL+TELEFONE = " + telefone
+                    + "VL_EMAIL = " + email;
+            prepareStmt = c.prepareStatement(sql);
+            prepareStmt.execute();
+            prepareStmt.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            fecharConexao();
+
+        }
+    }
+
+    /**
+     * 
+     * @throws ParseException
+     * @throws SQLException 
+     */
+    public void incerirDados() throws ParseException, SQLException {
+        String nome, telefone, email;
+        Date date;
+        DateFormat dt = DateFormat.getInstance();
+
+        System.out.println("informe Nome");
+        nome = ler.next();
+        System.out.println("informe Telefone");
+        telefone = ler.next();
+        System.out.println("infrome Data de Nascimento");
+        date = (Date) dt.parse(ler.next());
+        System.out.println("informe E-Mail");
+        email = ler.next();
+        
+        cadastrarContato(nome, telefone, email, date);
+    }
+    
+    
+    public void deletar(){
+       String nome; 
+        System.out.println("Digite o nome do contato para deletar");
+        nome = ler.next();
+        
+        try {
+            sql = "DELETE * FROM TB_CONTATO WHERE NM_CONTATO = "+nome;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+    }
+    
+    /**
+     * 
+     * @throws SQLException 
+     */
+    public void fecharConexao() throws SQLException {
+        prepareStmt.close();
+        c.commit();
+        c.close();
+    }
+
 }
