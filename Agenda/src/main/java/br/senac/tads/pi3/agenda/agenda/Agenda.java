@@ -37,6 +37,7 @@ public class Agenda {
                 case 2:
                     //CHAMAR METODO REMOVER, DESENVOLVER ABAIXO
                     System.out.println("Remover contato");
+                    crud.deletar();
                     break;
                 case 3:
                     //CHAMAR METODO ATUALIZAR, DESENVOLVER ABAIXO
